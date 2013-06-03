@@ -13,7 +13,17 @@ set autoread				              "reload files changed outside vim
 
 syntax on				                  "syntax highlighting
 
+" remappings
 let mapleader=","			            "remap leader to ,
+
+" splits  
+nnoremap <C-J> <C-W><C-J>         
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set splitbelow
+set splitright
 
 set mouse=a                       "allow scrolling
 
@@ -41,6 +51,9 @@ set expandtab
 
 filetype plugin on
 filetype indent on
+
+" wrap text files
+autocmd FileType text setlocal textwidth=78
 
 set nowrap
 set linebreak
@@ -76,6 +89,9 @@ if ! has('gui_running')
   augroup END
 endif
 
+" ====== ctrlp ========
+let g:ctrlp_working_path_mode = 'c'
+
 " ====== NERDTree =====
 
 map <C-m> :NERDTreeToggle<CR>
@@ -84,6 +100,8 @@ map <C-m> :NERDTreeToggle<CR>
 colorscheme molokai
 
 highlight clear SignColumn
+
+set list listchars=tab:»·,trail:·
 
 
 set rtp+=~/.vim/bundle/vundle/
@@ -109,6 +127,7 @@ Bundle 'tpope/vim-bundler'
 Bundle 'tomasr/molokai'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'jeffkreeftmeijer/vim-numbertoggle'
 " vim-scripts repos
 Bundle 'L9'
 " non github repos
