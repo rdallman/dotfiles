@@ -1,37 +1,39 @@
-set nocompatible               		" be iMproved
-filetype off                   		" required!
+set nocompatible                  " be iMproved
+filetype off                      " required!
+
+set pastetoggle=<F2>
 
 set encoding=utf-8
 
-set number                				"Line numbers
-set backspace=indent,eol,start		"Allow backspaces
-set history=1000		            	"long history
-set showcmd				                "show incomplete commands
-set showmode				              "show current mode
-set visualbell				            "stop ringing
-set autoread				              "reload files changed outside vim	
+set relativenumber                "Line numbers
+set backspace=indent,eol,start    "Allow backspaces
+set history=1000                  "long history
+set showcmd                       "show incomplete commands
+set showmode                      "show current mode
+set visualbell                    "stop ringing
+set autoread                      "reload files changed outside vim
 
-syntax on				                  "syntax highlighting
+syntax on                         "syntax highlighting
 
 " remappings
-let mapleader=","			            "remap leader to ,
+let mapleader=","                 "remap leader to ,
 
-" splits  
-nnoremap <C-J> <C-W><C-J>         
+" splits                          "much more 'vim' like
+nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-set splitbelow
+set splitbelow                    "naturally go right and down
 set splitright
 
 set mouse=a                       "allow scrolling
 
 " ====== Search Settings ======
 
-set incsearch				              "get next match while typing
-set hlsearch				              "highlighting
-set viminfo='100,f1			          "save 100 marks, caps
+set incsearch                     "get next match while typing
+set hlsearch                      "highlighting
+set viminfo='100,f1               "save 100 marks, caps
 
 " ====== Pesky Swaps =====
 
@@ -72,15 +74,20 @@ set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 
-set scrolloff=8
+set scrolloff=8                       "keep a reasonable padding at edges
 set sidescrolloff=15
 set sidescroll=1
 
 " ====== Powerline ======
-set laststatus=2            "always display statusline in all windows
+source ~/.vim/bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
+"python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+set laststatus=2                      "always display statusline in all windows
 let g:Powerline_symbols = 'fancy'
-set noshowmode              "hide default mode text
-if ! has('gui_running')
+set noshowmode                        "hide default mode text
+if ! has('gui_running')               "fix the slowness of powerline
   set ttimeoutlen=10
   augroup FastEscape
     autocmd!
@@ -90,19 +97,31 @@ if ! has('gui_running')
 endif
 
 " ====== ctrlp ========
-let g:ctrlp_working_path_mode = 'c'
+let g:ctrlp_working_path_mode = 'c'     "use current dir
 
 " ====== NERDTree =====
 
-map <C-m> :NERDTreeToggle<CR>
-
 " ====== Theme ======
-colorscheme molokai
+colorscheme hybrid
 
-highlight clear SignColumn
+highlight clear SignColumn              "gitgutter color
 
 set list listchars=tab:»·,trail:·
 
+" ======= use clipboard ========
+
+if system("uname") == "Darwin\n"
+  set clipboard=unnamed
+endif
+
+" ======== color shit =======
+
+let g:hybrid_use_Xresources = 1
+
+" ======= youcompleteme ======
+let g:ycm_register_as_syntastic_checker = 1
+
+" ======== vundle ==========
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -116,9 +135,9 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Lokaltog/powerline'
 Bundle 'tpope/vim-rails.git'
 Bundle 'Valloric/YouCompleteMe'
-Bundle 'Lokaltog/vim-powerline'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
@@ -127,10 +146,11 @@ Bundle 'tpope/vim-bundler'
 Bundle 'tomasr/molokai'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle 'jeffkreeftmeijer/vim-numbertoggle'
+Bundle 'flazz/vim-colorschemes'
+Bundle 'w0ng/vim-hybrid'
 " vim-scripts repos
 Bundle 'L9'
 " non github repos
-" ...
+Bundle 'file:///Users/reed/Dev/openrefactory/OpenRefactory/org.openrefactory.vim.ui/openrefactory/'
 
 filetype plugin indent on     " required!
