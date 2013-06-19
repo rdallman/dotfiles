@@ -17,6 +17,7 @@ syntax on                         "syntax highlighting
 
 " remappings
 let mapleader=","                 "remap leader to ,
+noremap <leader>l :noh<CR>
 
 " splits                          "much more 'vim' like
 nnoremap <C-J> <C-W><C-J>
@@ -54,8 +55,8 @@ set expandtab
 filetype plugin on
 filetype indent on
 
-" wrap text files
-autocmd FileType text setlocal textwidth=78
+" wrap text, markdown files
+autocmd FileType text, markdown setlocal textwidth=78
 
 set nowrap
 set linebreak
@@ -97,9 +98,11 @@ if ! has('gui_running')               "fix the slowness of powerline
 endif
 
 " ====== ctrlp ========
-let g:ctrlp_working_path_mode = 'c'     "use current dir
 
 " ====== NERDTree =====
+
+" ====== EasyMotion =====
+let g:EasyMotion_leader_key = '<Leader>'
 
 " ====== Theme ======
 colorscheme hybrid
@@ -119,7 +122,11 @@ endif
 let g:hybrid_use_Xresources = 1
 
 " ======= youcompleteme ======
-let g:ycm_register_as_syntastic_checker = 1
+
+" ======= tabular ============
+vmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+
 
 " ======== vundle ==========
 
@@ -134,20 +141,21 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-bundler'
+Bundle 'tpope/vim-markdown'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/powerline'
-Bundle 'tpope/vim-rails.git'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-bundler'
-Bundle 'tomasr/molokai'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'terryma/vim-multiple-cursors'
-Bundle 'flazz/vim-colorschemes'
 Bundle 'w0ng/vim-hybrid'
+Bundle 'godlygeek/tabular'
 " vim-scripts repos
 Bundle 'L9'
 " non github repos

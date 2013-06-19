@@ -46,7 +46,8 @@ source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 export GOROOT=/usr/local/Cellar/go/1.1.1/
 export GOPATH=$GOROOT/bin
-export PATH=:/usr/local/bin:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/$GOPATH:/Users/reed/.rvm/gems/ruby-2.0.0-p0/bin:/Users/reed/.rvm/gems/ruby-2.0.0-p0@global/bin:/Users/reed/.rvm/rubies/ruby-2.0.0-p0/bin:/Users/reed/.rvm/bin:/Applications/Postgres.app/Contents/MacOS/bin:/usr/bin:/bin:/usr/sbin::/usr/local/git/bin:/Users/reed/android-sdks/platform-tools
+export PATH=/usr/local/bin:/usr/local/sbink/opt/local/bin:/opt/local/sbin:$HOME/.rvm/bin:/$GOPATH:/Applications/Postgres.app/Contents/MacOS/bin:/usr/bin:/bin:/usr/sbin:/usr/local/git/bin:/Users/reed/android-sdks/platform-tools
 
 
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+
