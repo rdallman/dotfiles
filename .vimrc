@@ -12,12 +12,16 @@ set showcmd                       "show incomplete commands
 set showmode                      "show current mode
 set visualbell                    "stop ringing
 set autoread                      "reload files changed outside vim
+set t_Co=256
+set lazyredraw
 
 syntax on                         "syntax highlighting
 
 " remappings
 let mapleader=","                 "remap leader to ,
-noremap <leader>l :noh<CR>
+noremap <silent> <leader>l :noh<CR>
+noremap <silent> <leader>o :tab sp<CR>
+noremap <silent> <leader>x :tabc<CR>
 
 " splits                          "much more 'vim' like
 nnoremap <C-J> <C-W><C-J>
@@ -52,11 +56,10 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 " wrap text, markdown files
-autocmd FileType text, markdown setlocal textwidth=78
+autocmd BufRead,BufNewFile text,markdown setlocal tw=78
 
 set nowrap
 set linebreak
@@ -80,13 +83,14 @@ set sidescrolloff=15
 set sidescroll=1
 
 " ====== Powerline ======
+" this is hell to set up and potentially not all necessary, but it if it ain't
+" broke...
 source ~/.vim/bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
-"python import sys; sys.path.append("/usr/local/lib/python2.7/site-packages/")
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
 set laststatus=2                      "always display statusline in all windows
-let g:Powerline_symbols = 'fancy'
+"let g:Powerline_symbols = 'fancy'     " those are some nice arrows
 set noshowmode                        "hide default mode text
 if ! has('gui_running')               "fix the slowness of powerline
   set ttimeoutlen=10
@@ -97,6 +101,8 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
+" ====== airline ======
+
 " ====== ctrlp ========
 
 " ====== NERDTree =====
@@ -105,21 +111,18 @@ endif
 let g:EasyMotion_leader_key = '<Leader>'
 
 " ====== Theme ======
-colorscheme hybrid
+colorscheme hybrid                      "pretty colors
+let g:hybrid_use_Xresources = 1
 
 highlight clear SignColumn              "gitgutter color
 
-set list listchars=tab:»·,trail:·
+set list listchars=tab:»·,trail:·       "trailing whitespace
 
 " ======= use clipboard ========
 
-if system("uname") == "Darwin\n"
+if system("uname") == "Darwin\n"        "mac clipboard on yank, hooray!
   set clipboard=unnamed
 endif
-
-" ======== color shit =======
-
-let g:hybrid_use_Xresources = 1
 
 " ======= youcompleteme ======
 
@@ -147,6 +150,7 @@ Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-markdown'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/powerline'
+"Bundle 'bling/vim-airline'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
@@ -157,8 +161,6 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'w0ng/vim-hybrid'
 Bundle 'godlygeek/tabular'
 " vim-scripts repos
-Bundle 'L9'
+"Bundle 'L9'
 " non github repos
 Bundle 'file:///Users/reed/Dev/openrefactory/OpenRefactory/org.openrefactory.vim.ui/openrefactory/'
-
-filetype plugin indent on     " required!
