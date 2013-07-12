@@ -5,7 +5,8 @@ set pastetoggle=<F2>
 
 set encoding=utf-8
 
-set relativenumber                "Line numbers
+set number                        "Line numbers within relative
+set relativenumber                "awesome-sauce
 set backspace=indent,eol,start    "Allow backspaces
 set history=1000                  "long history
 set showcmd                       "show incomplete commands
@@ -64,6 +65,10 @@ autocmd BufRead,BufNewFile text,markdown setlocal tw=78
 set nowrap
 set linebreak
 
+" ====== Folding =========
+set foldmethod=indent
+au BufRead * normal zR
+
 " ====== Completion ======
 set wildmode=list:longest
 set wildmenu
@@ -85,7 +90,7 @@ set sidescroll=1
 " ====== Powerline ======
 " this is hell to set up and potentially not all necessary, but it if it ain't
 " broke...
-source ~/.vim/bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
+"source ~/.vim/bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
 "python from powerline.vim import setup as powerline_setup
 "python powerline_setup()
 "python del powerline_setup
@@ -102,8 +107,14 @@ if ! has('gui_running')               "fix the slowness of powerline
 endif
 
 " ====== airline ======
+let g:airline_left_sep= '▶'
+let g:airline_right_sep = '◀'
+let g:airline_fugitive_prefix = '⎇   '
+let g:airline_linecolumn_prefix = '␊ '
 
 " ====== ctrlp ========
+
+"hi clear CtrlPMode1
 
 " ====== NERDTree =====
 
@@ -111,8 +122,8 @@ endif
 let g:EasyMotion_leader_key = '<Leader>'
 
 " ====== Theme ======
-colorscheme hybrid                      "pretty colors
-let g:hybrid_use_Xresources = 1
+colorscheme jellybeans                  "pretty colors
+"let g:hybrid_use_Xresources = 1
 
 highlight clear SignColumn              "gitgutter color
 
@@ -149,8 +160,8 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-markdown'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'Lokaltog/powerline'
-"Bundle 'bling/vim-airline'
+"Bundle 'Lokaltog/powerline'
+Bundle 'bling/vim-airline'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
@@ -160,7 +171,8 @@ Bundle 'airblade/vim-gitgutter'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'w0ng/vim-hybrid'
 Bundle 'godlygeek/tabular'
+Bundle 'nanotech/jellybeans.vim'
 " vim-scripts repos
 "Bundle 'L9'
 " non github repos
-Bundle 'file:///Users/reed/Dev/openrefactory/OpenRefactory/org.openrefactory.vim.ui/openrefactory/'
+Bundle 'file:///home/reed/Dev/openrefactory/openrefactory-vim/'
