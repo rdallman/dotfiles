@@ -1,6 +1,8 @@
 set nocompatible                  " be iMproved
 filetype off                      " required!
 
+set shell=/bin/bash               "for fish
+
 set pastetoggle=<F2>
 
 set encoding=utf-8
@@ -60,7 +62,33 @@ set expandtab
 filetype plugin indent on
 
 " wrap text, markdown files
-autocmd BufRead,BufNewFile text,markdown setlocal tw=78
+augroup vimrcEx
+  autocmd!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
+  " Cucumber navigation commands
+  autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
+  autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
+
+  " Set syntax highlighting for specific file types
+  autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+  " Enable spellchecking for Markdown
+  autocmd BufRead,BufNewFile *.md setlocal spell
+
+  " Automatically wrap at 80 characters for Markdown
+  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+augroup END
 
 set nowrap
 set linebreak
@@ -88,14 +116,7 @@ set sidescrolloff=15
 set sidescroll=1
 
 " ====== Powerline ======
-" this is hell to set up and potentially not all necessary, but it if it ain't
-" broke...
-"source ~/.vim/bundle/powerline/powerline/bindings/vim/plugin/powerline.vim
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
 set laststatus=2                      "always display statusline in all windows
-"let g:Powerline_symbols = 'fancy'     " those are some nice arrows
 set noshowmode                        "hide default mode text
 if ! has('gui_running')               "fix the slowness of powerline
   set ttimeoutlen=10
@@ -107,14 +128,10 @@ if ! has('gui_running')               "fix the slowness of powerline
 endif
 
 " ====== airline ======
-let g:airline_left_sep= '▶'
-let g:airline_right_sep = '◀'
 let g:airline_fugitive_prefix = '⎇   '
 let g:airline_linecolumn_prefix = '␊ '
 
 " ====== ctrlp ========
-
-"hi clear CtrlPMode1
 
 " ====== NERDTree =====
 
@@ -172,7 +189,9 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'w0ng/vim-hybrid'
 Bundle 'godlygeek/tabular'
 Bundle 'nanotech/jellybeans.vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'rdallman/openrefactory-vim'
 " vim-scripts repos
 "Bundle 'L9'
 " non github repos
-Bundle 'file:///home/reed/Dev/openrefactory/openrefactory-vim/'
+"Bundle 'file:///home/reed/Dev/openrefactory/openrefactory-vim/'
