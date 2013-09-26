@@ -1,10 +1,6 @@
 set nocompatible                  " be iMproved
 filetype off                      " required!
 
-set shell=/bin/bash               "for fish
-
-set pastetoggle=<F2>
-
 set encoding=utf-8
 
 set number                        "Line numbers within relative
@@ -16,21 +12,26 @@ set showmode                      "show current mode
 set visualbell                    "stop ringing
 set autoread                      "reload files changed outside vim
 set t_Co=256
-set lazyredraw
 
 syntax on                         "syntax highlighting
 
 " remappings
 let mapleader=","                 "remap leader to ,
+set pastetoggle=<F2>
 noremap <silent> <leader>l :noh<CR>
 noremap <silent> <leader>o :tab sp<CR>
 noremap <silent> <leader>x :tabc<CR>
+map <leader>= mzgg=G`z<CR>
 
 " splits                          "much more 'vim' like
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+nmap <c-w>l :vertical res +20<cr>
+nmap <c-w>h :vertical res -20<cr>
+nmap <c-w>j :res -20<cr>
+nmap <c-w>k :res +20<cr>
 
 set splitbelow                    "naturally go right and down
 set splitright
@@ -72,9 +73,9 @@ augroup vimrcEx
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
-    \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
+	\ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+	\   exe "normal g`\"" |
+	\ endif
 
   " Cucumber navigation commands
   autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
@@ -115,7 +116,7 @@ set scrolloff=8                       "keep a reasonable padding at edges
 set sidescrolloff=15
 set sidescroll=1
 
-" ====== Powerline ======
+" ====== airline ======
 set laststatus=2                      "always display statusline in all windows
 set noshowmode                        "hide default mode text
 if ! has('gui_running')               "fix the slowness of powerline
@@ -127,71 +128,96 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-" ====== airline ======
-let g:airline_fugitive_prefix = '⎇   '
-let g:airline_linecolumn_prefix = '␊ '
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'tomorrow'
+let g:airline_section_x = ''
+let g:airline_section_y = '%{&filetype}'
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
+
+" ====== bufferline ===
+let g:bufferline_echo = 0
 
 " ====== ctrlp ========
 
 " ====== NERDTree =====
+map <Leader>m :NERDTreeToggle<CR>
 
 " ====== EasyMotion =====
 let g:EasyMotion_leader_key = '<Leader>'
 
-" ====== Theme ======
-colorscheme jellybeans                  "pretty colors
-"let g:hybrid_use_Xresources = 1
+"" ====== Theme ======
+colorscheme hybrid
 
 highlight clear SignColumn              "gitgutter color
 
 set list listchars=tab:»·,trail:·       "trailing whitespace
 
-" ======= use clipboard ========
+"" ======= use clipboard ========
 
 if system("uname") == "Darwin\n"        "mac clipboard on yank, hooray!
   set clipboard=unnamed
 endif
 
-" ======= youcompleteme ======
+"" ======= youcompleteme ======
 
-" ======= tabular ============
-vmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a: :Tabularize /:<CR>
+"" ======= fugitive ===========
+nmap <leader>gs :Gstatus<cr>
+nmap <leader>gc :Gcommit -a<cr>
 
+"" ======= tabular ============
+vmap <Leader>t= :Tabularize /=<CR>
+vmap <Leader>t: :Tabularize /:<CR>
 
-" ======== vundle ==========
+"" ======= go ===============
+filetype off
+filetype plugin indent off
+set rtp+=/usr/local/go/misc/vim
+filetype plugin indent on
+syntax on
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+"" ======== vundle ==========
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+if has('vim_starting')
+  set rtp+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+NeoBundle 'Shougo/vimproc'
 
 " My Bundles here:
 "
 " original repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-markdown'
-Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'Lokaltog/powerline'
-Bundle 'bling/vim-airline'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'w0ng/vim-hybrid'
-Bundle 'godlygeek/tabular'
-Bundle 'nanotech/jellybeans.vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'rdallman/openrefactory-vim'
-" vim-scripts repos
-"Bundle 'L9'
-" non github repos
-"Bundle 'file:///home/reed/Dev/openrefactory/openrefactory-vim/'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-rails.git'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-markdown'
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'bling/vim-bufferline'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'noahfrederick/vim-hemisu'
+NeoBundle 'vim-scripts/ParseJSON'
+
+set rtp+=~/Dev/openrefactory-vim/
+set rtp+=$GOPATH/src/go-oracle-vim
+
+filetype plugin indent on
+NeoBundleCheck
+
