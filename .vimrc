@@ -19,19 +19,14 @@ syntax on                         "syntax highlighting
 let mapleader=","                 "remap leader to ,
 set pastetoggle=<F2>
 noremap <silent> <leader>l :noh<CR>
-noremap <silent> <leader>o :tab sp<CR>
-noremap <silent> <leader>x :tabc<CR>
-map <leader>= mzgg=G`z<CR>
+noremap <silent> <leader>d :bd<CR>
 
 " splits                          "much more 'vim' like
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
-nmap <c-w>l :vertical res +20<cr>
-nmap <c-w>h :vertical res -20<cr>
-nmap <c-w>j :res -20<cr>
-nmap <c-w>k :res +20<cr>
+nnoremap <C-=> <C-W>=
 
 set splitbelow                    "naturally go right and down
 set splitright
@@ -73,9 +68,9 @@ augroup vimrcEx
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
-	\ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-	\   exe "normal g`\"" |
-	\ endif
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
 
   " Cucumber navigation commands
   autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
@@ -83,6 +78,9 @@ augroup vimrcEx
 
   " Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile *.md set filetype=markdown
+
+  " gofmt on save
+  autocmd FileType go autocmd BufWritePre <buffer> Fmt
 
   " Enable spellchecking for Markdown
   autocmd BufRead,BufNewFile *.md setlocal spell
@@ -128,7 +126,6 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_powerline_fonts = 1
 let g:airline_theme = 'tomorrow'
 let g:airline_section_x = ''
 let g:airline_section_y = '%{&filetype}'
@@ -139,9 +136,16 @@ let g:airline#extensions#hunks#enabled = 0
 let g:bufferline_echo = 0
 
 " ====== ctrlp ========
+if executable('ag')
+  " use silver searcher for grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
-" ====== NERDTree =====
-map <Leader>m :NERDTreeToggle<CR>
+  " use ag in CtrlP
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  "yeah no cache is nice for new files, thanks ag
+  let g:ctrlp_use_caching = 0
+endif
 
 " ====== EasyMotion =====
 let g:EasyMotion_leader_key = '<Leader>'
@@ -172,7 +176,7 @@ vmap <Leader>t: :Tabularize /:<CR>
 "" ======= go ===============
 filetype off
 filetype plugin indent off
-set rtp+=/usr/local/go/misc/vim
+set rtp+=$GOROOT/misc/vim
 filetype plugin indent on
 syntax on
 
@@ -210,13 +214,11 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'godlygeek/tabular'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'noahfrederick/vim-hemisu'
-NeoBundle 'vim-scripts/ParseJSON'
+NeoBundle 'rking/ag.vim'
+"NeoBundle 'nanotech/jellybeans.vim'
+"NeoBundle 'noahfrederick/vim-hemisu'
 
-set rtp+=~/Dev/openrefactory-vim/
-set rtp+=$GOPATH/src/go-oracle-vim
+set rtp+=~/Dev/OpenRefactory/org.openrefactory.vim.ui/openrefactory-vim
 
 filetype plugin indent on
 NeoBundleCheck
