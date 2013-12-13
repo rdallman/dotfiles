@@ -126,7 +126,7 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_theme = 'tomorrow'
+let g:airline_theme = 'bubblegum'
 let g:airline_section_x = ''
 let g:airline_section_y = '%{&filetype}'
 let g:airline#extensions#whitespace#enabled = 0
@@ -153,15 +153,13 @@ let g:EasyMotion_leader_key = '<Leader>'
 "" ====== Theme ======
 colorscheme hybrid
 
-highlight clear SignColumn              "gitgutter color
+hi clear SignColumn              "gitgutter color
 
 set list listchars=tab:»·,trail:·       "trailing whitespace
 
 "" ======= use clipboard ========
 
-if system("uname") == "Darwin\n"        "mac clipboard on yank, hooray!
-  set clipboard=unnamed
-endif
+set clipboard=unnamedplus
 
 "" ======= youcompleteme ======
 
@@ -182,44 +180,56 @@ syntax on
 
 "" ======== vundle ==========
 
-if has('vim_starting')
-  set rtp+=~/.vim/bundle/neobundle.vim/
+" install Vundle if fresh system
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle.."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    let iCanHazVundle=0
 endif
 
-call neobundle#rc(expand('~/.vim/bundle/'))
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-NeoBundle 'Shougo/vimproc'
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
 
 " My Bundles here:
 "
 " original repos on github
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-rails.git'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'bling/vim-airline'
-NeoBundle 'bling/vim-bufferline'
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'rking/ag.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-rails.git'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-markdown'
+Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'bling/vim-airline'
+Bundle 'bling/vim-bufferline'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'vim-ruby/vim-ruby'
+Bundle 'airblade/vim-gitgutter'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'w0ng/vim-hybrid'
+Bundle 'godlygeek/tabular'
+Bundle 'rking/ag.vim'
 "NeoBundle 'nanotech/jellybeans.vim'
 "NeoBundle 'noahfrederick/vim-hemisu'
+
+"install above bundles if fresh system
+if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :BundleInstall
+endif
 
 set rtp+=~/Dev/OpenRefactory/org.openrefactory.vim.ui/openrefactory-vim
 
 filetype plugin indent on
-NeoBundleCheck
 
+hi Normal ctermbg=none
