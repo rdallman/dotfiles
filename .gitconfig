@@ -1,0 +1,19 @@
+[user]
+	name = Reed Allman
+	email = rdallman10@gmail.com
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status -sb
+  ls = log --pretty=format:\"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]\" --decorate --date=short
+  lsv = log --pretty=format:\"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]\" --decorate --date=short --numstat
+  lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+[push]
+	default = tracking
+[branch]
+	autosetuprebase = always
