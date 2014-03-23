@@ -5,7 +5,10 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="shrew"
+ZSH_THEME="kolo"
+
+# VI mode
+bindkey -v
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -18,13 +21,13 @@ ZSH_THEME="shrew"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment to change how often before auto-updates occur? (in days)
-# export UPDATE_ZSH_DAYS=13
+ export UPDATE_ZSH_DAYS=7
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
 
 # Uncomment following line if you want to disable autosetting terminal title.
-# DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want to disable command autocorrection
 DISABLE_CORRECTION="true"
@@ -40,16 +43,31 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(osx git github fasd zsh-syntax-highlighting brew rbenv heroku)
+plugins=(osx git github fasd zsh-syntax-highlighting brew rbenv go heroku gradle)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export RBENV_ROOT=/usr/local/var/rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+#aliases
+#everybody
+alias vi=vim
+alias gi='go install'
+alias gir='go install && `basename $PWD`'
+
+alias squash='git fetch origin && git rebase -i HEAD~`git cherry -v origin/master | wc -l | tr -d " "`'
+
+#mac attack
+alias bb='brew update && brew upgrade'
+
+#linux
+alias uu='sudo apt-get update && sudo apt-get -y upgrade'
 
 export GOPATH=$HOME/Dev/gocode
 export GOROOT=/usr/local/go
 
-export PATH=$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
+export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
+
+export PATH=$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+

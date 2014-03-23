@@ -76,6 +76,7 @@ augroup vimrcEx
   autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
   autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
 
+
   " Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
@@ -88,6 +89,8 @@ augroup vimrcEx
   " Automatically wrap at 80 characters for Markdown
   autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 augroup END
+
+let g:gofmt_command="goimports"
 
 set nowrap
 set linebreak
@@ -126,11 +129,11 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'tomorrow'
 let g:airline_section_x = ''
 let g:airline_section_y = '%{&filetype}'
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#hunks#enabled = 0  
 
 " ====== bufferline ===
 let g:bufferline_echo = 0
@@ -151,7 +154,6 @@ endif
 let g:EasyMotion_leader_key = '<Leader>'
 
 "" ====== Theme ======
-colorscheme hybrid
 
 hi clear SignColumn              "gitgutter color
 
@@ -159,7 +161,7 @@ set list listchars=tab:»·,trail:·       "trailing whitespace
 
 "" ======= use clipboard ========
 
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 "" ======= youcompleteme ======
 
@@ -210,7 +212,6 @@ Bundle 'bling/vim-bufferline'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'airblade/vim-gitgutter'
@@ -218,8 +219,7 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'w0ng/vim-hybrid'
 Bundle 'godlygeek/tabular'
 Bundle 'rking/ag.vim'
-"NeoBundle 'nanotech/jellybeans.vim'
-"NeoBundle 'noahfrederick/vim-hemisu'
+Bundle 'rdallman/openrefactory-vim'
 
 "install above bundles if fresh system
 if iCanHazVundle == 0
@@ -228,8 +228,11 @@ if iCanHazVundle == 0
     :BundleInstall
 endif
 
-set rtp+=~/Dev/OpenRefactory/org.openrefactory.vim.ui/openrefactory-vim
+" hooray internal tools
+"set rtp+=/Users/reed/dev/OpenRefactory/org.openrefactory.ui.vim/openrefactory-vim
+set rtp+=$GOPATH/src/golang-refactoring.org/go-doctor/extras/vim
 
 filetype plugin indent on
 
-hi Normal ctermbg=none
+"hi Normal ctermbg=none
+colorscheme hybrid
