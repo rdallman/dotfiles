@@ -72,11 +72,6 @@ augroup vimrcEx
         \   exe "normal g`\"" |
         \ endif
 
-  " Cucumber navigation commands
-  autocmd User Rails Rnavcommand step features/step_definitions -glob=**/* -suffix=_steps.rb
-  autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=routes
-
-
   " Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
@@ -129,7 +124,7 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_theme = 'tomorrow'
+let g:airline_theme = 'hybrid'
 let g:airline_section_x = ''
 let g:airline_section_y = '%{&filetype}'
 let g:airline#extensions#whitespace#enabled = 0
@@ -149,6 +144,21 @@ if executable('ag')
   "yeah no cache is nice for new files, thanks ag
   let g:ctrlp_use_caching = 0
 endif
+
+" ====== fasd ===========
+" Z - cd to recent / frequent directories
+command! -nargs=* Z :call Z(<f-args>)
+function! Z(...)
+  let cmd = 'fasd -d -e printf'
+  for arg in a:000
+    let cmd = cmd . ' ' . arg
+  endfor
+  let path = system(cmd)
+  if isdirectory(path)
+    echo path
+    exec 'cd ' . path
+  endif
+endfunction
 
 " ====== EasyMotion =====
 let g:EasyMotion_leader_key = '<Leader>'
@@ -186,11 +196,11 @@ syntax on
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let iCanHazVundle=0
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+  let iCanHazVundle=0
 endif
 
 set rtp+=~/.vim/bundle/vundle/
@@ -201,31 +211,25 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-markdown'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-unimpaired'
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bling/vim-airline'
 Bundle 'bling/vim-bufferline'
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'vim-ruby/vim-ruby'
 Bundle 'airblade/vim-gitgutter'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'w0ng/vim-hybrid'
-Bundle 'godlygeek/tabular'
 Bundle 'rking/ag.vim'
-Bundle 'rdallman/openrefactory-vim'
 
 "install above bundles if fresh system
 if iCanHazVundle == 0
-    echo "Installing Bundles, please ignore key map error messages"
-    echo ""
-    :BundleInstall
+  echo "Installing Bundles, please ignore key map error messages"
+  echo ""
+  :BundleInstall
 endif
 
 " hooray internal tools
@@ -234,5 +238,5 @@ set rtp+=$GOPATH/src/golang-refactoring.org/go-doctor/extras/vim
 
 filetype plugin indent on
 
-"hi Normal ctermbg=none
 colorscheme hybrid
+hi Normal ctermfg=250 ctermbg=none

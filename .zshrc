@@ -43,7 +43,7 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(osx git github fasd zsh-syntax-highlighting brew rbenv go heroku gradle)
+plugins=(git github fasd go heroku systemadmin)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -61,13 +61,9 @@ alias squash='git fetch origin && git rebase -i HEAD~`git cherry -v origin/maste
 alias bb='brew update && brew upgrade'
 
 #linux
-alias uu='sudo apt-get update && sudo apt-get -y upgrade'
+alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade'
 
 export GOPATH=$HOME/Dev/gocode
-export GOROOT=/usr/local/go
-
-export PATH=$PATH:/Applications/Postgres93.app/Contents/MacOS/bin
-
-export PATH=$GOPATH/bin:$GOROOT/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export GOROOT=/usr/local/src/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
