@@ -1,6 +1,50 @@
 set nocompatible                  " be iMproved
 filetype off                      " required!
 
+"" ======== vundle ==========
+" install Vundle if fresh system
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
+if !filereadable(vundle_readme)
+  echo "Installing Vundle.."
+  echo ""
+  silent !mkdir -p ~/.vim/bundle
+  silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/Vundle.vim
+  let iCanHazVundle=0
+endif
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/vundle'
+
+" Plugins
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'bling/vim-airline'
+Plugin 'bling/vim-bufferline'
+Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'rking/ag.vim'
+Plugin 'fatih/vim-go'
+Plugin 'wting/rust.vim'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+"install above bundles if fresh system
+if iCanHazVundle == 0
+  echo "Installing Bundles, please ignore key map error messages"
+  echo ""
+  :PluginInstall
+endif
+
 set encoding=utf-8                "b/c Pike won
 
 set number                        "Line numbers within relative
@@ -85,6 +129,9 @@ set linebreak                       " stahp
 set foldmethod=indent               " too lazy to tag
 au BufRead * normal zR
 
+" ====== completion ======
+set wildmode=list:longest  
+
 " ====== scrolling ========
 set scrolloff=8                       "keep a reasonable padding at edges
 set sidescrolloff=15
@@ -141,6 +188,10 @@ endfunction
 "" ====== Theme ======
 hi clear SignColumn                 "gitgutter color
 set list listchars=tab:»·,trail:·   "trailing whitespace, die 4 space tabs!
+colorscheme hybrid
+syntax on
+" see through your computer's soul
+hi Normal ctermfg=250 ctermbg=none 
 
 "" ======= use clipboard ========
 set clipboard=unnamedplus           "this doesn't work anyway!
@@ -148,55 +199,6 @@ set clipboard=unnamedplus           "this doesn't work anyway!
 " ======== synstastic =========
 let g:syntastic_check_on_wq = 0     "nobody likes you c++, go away
 
-"" ======== vundle ==========
-" install Vundle if fresh system
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-  echo "Installing Vundle.."
-  echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-  let iCanHazVundle=0
-endif
-
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-Bundle 'gmarik/vundle'
-
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-markdown'
-Bundle 'tpope/vim-endwise'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'bling/vim-airline'
-Bundle 'bling/vim-bufferline'
-Bundle 'kien/ctrlp.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'airblade/vim-gitgutter'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'w0ng/vim-hybrid'
-Bundle 'rking/ag.vim'
-Bundle 'fatih/vim-go'
-
-"install above bundles if fresh system
-if iCanHazVundle == 0
-  echo "Installing Bundles, please ignore key map error messages"
-  echo ""
-  :BundleInstall
-endif
-
 " =========== go stuffs ============
 set rtp+=$GOPATH/src/golang-refactoring.org/go-doctor/cmd/godoctor/vim
 let g:go_fmt_command = "goimports"
-
-" ========== theme all the things ==
-" have to do this after Bundle...
-" TODO(reed): get your fucking shit together man put bundle at top
-colorscheme hybrid
-filetype plugin indent on
-syntax on
-
-" see through your computer's soul
-hi Normal ctermfg=250 ctermbg=none 
