@@ -1,3 +1,4 @@
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -6,9 +7,6 @@ ZSH=$HOME/.oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 ZSH_THEME="kolo"
-
-# VI mode
-bindkey -v
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -47,7 +45,9 @@ plugins=(git github fasd go heroku systemadmin)
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
+# VI mode
+#bindkey -v
+#bindkey -M vicmd '/' history-incremental-search-backward
 
 #aliases
 #everybody
@@ -57,6 +57,8 @@ alias gir='go install && `basename $PWD`'
 
 alias squash='git fetch origin && git rebase -i HEAD~`git cherry -v origin/master | wc -l | tr -d " "`'
 
+alias tmux='tmux -2'
+
 #mac attack
 alias bb='brew update && brew upgrade'
 
@@ -64,6 +66,9 @@ alias bb='brew update && brew upgrade'
 alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade'
 
 export GOPATH=$HOME/Dev/gocode
-export GOROOT=/usr/local/src/go
+export GOROOT=/usr/local/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
