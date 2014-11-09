@@ -1,48 +1,47 @@
 set nocompatible                  " be iMproved
 filetype off                      " required!
 
-"" ======== vundle ==========
-" install Vundle if fresh system
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/Vundle.vim/README.md')
-if !filereadable(vundle_readme)
-  echo "Installing Vundle.."
+"" ======== plugin manager -- I guess this changes yearly now==========
+" install plugin manager of the week if fresh system
+let iCanHazPlugins=1
+let plug=expand('~/.vim/autoload/plug.vim')
+if !filereadable(plug)
+  echo "Right now you thanks previous you..."
   echo ""
-  silent !mkdir -p ~/.vim/bundle
-  silent !git clone https://github.com/gmarik/Vundle.vim ~/.vim/bundle/Vundle.vim
-  let iCanHazVundle=0
+  silent !mkdir -p ~/.vim/autoload
+  silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  let iCanHazPlugins=0
 endif
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/vundle'
+call plug#begin('~/.vim/plugged')
 
 " Plugins
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'bling/vim-airline'
-Plugin 'bling/vim-bufferline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/syntastic'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'w0ng/vim-hybrid'
-Plugin 'rking/ag.vim'
-Plugin 'fatih/vim-go'
-Plugin 'wting/rust.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'cespare/vim-toml'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-unimpaired'
+Plug 'bling/vim-airline'
+Plug 'bling/vim-bufferline'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/syntastic'
+Plug 'scrooloose/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'w0ng/vim-hybrid'
+Plug 'rking/ag.vim'
+Plug 'fatih/vim-go'
+Plug 'wting/rust.vim'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()             " required
+filetype plugin indent on   " required
 
 "install above bundles if fresh system
-if iCanHazVundle == 0
-  echo "Installing Bundles, please ignore key map error messages"
+if iCanHazPlugins == 0
+  echo "Installing yo shit, please ignore key map error messages"
   echo ""
-  :PluginInstall
+  :PlugInstall
 endif
 
 set encoding=utf-8                "b/c Pike won
