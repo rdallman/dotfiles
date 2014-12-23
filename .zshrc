@@ -6,7 +6,9 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="kolo"
+#ZSH_THEME="imajes"
+#ZSH_THEME="lukerandall"
+ZSH_THEME="reedclean"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -54,6 +56,8 @@ source $ZSH/oh-my-zsh.sh
 alias vi=vim
 alias gi='go install'
 alias gir='go install && `basename $PWD`'
+alias gob='go build'
+alias gobr='go build && `basename $PWD`'
 
 alias squash='git fetch origin && git rebase -i HEAD~`git cherry -v origin/master | wc -l | tr -d " "`'
 
@@ -66,9 +70,8 @@ alias bb='brew update && brew upgrade'
 alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade'
 
 export GOPATH=$HOME/Dev/gocode
-export GOROOT=/usr/local/go
+export GOROOT=/usr/local/src/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"

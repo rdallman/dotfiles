@@ -33,6 +33,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'rking/ag.vim'
 Plug 'fatih/vim-go'
 Plug 'wting/rust.vim'
+Plug 'nanotech/jellybeans.vim'
 
 call plug#end()             " required
 filetype plugin indent on   " required
@@ -148,7 +149,7 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_theme = 'hybrid'
+let g:airline_theme = 'jellybeans'
 let g:airline_section_x = ''                      "who cares if utf8?
 let g:airline_section_y = '%{&filetype}'          "put ^ here
 let g:airline#extensions#whitespace#enabled = 0   "shut up I have gofmt
@@ -186,11 +187,13 @@ endfunction
 
 "" ====== Theme ======
 hi clear SignColumn                 "gitgutter color
-set list listchars=tab:»·,trail:·   "trailing whitespace, die 4 space tabs!
-colorscheme hybrid
+"set list listchars=tab:»·,trail:·   "trailing whitespace, die 4 space tabs!
+colorscheme jellybeans
 syntax on
 " see through your computer's soul
-hi Normal ctermfg=250 ctermbg=none 
+hi Normal ctermbg=none
+hi LineNr ctermbg=none
+hi NonText ctermbg=none guibg=None
 
 "" ======= use clipboard ========
 set clipboard=unnamedplus           "this doesn't work anyway!
