@@ -149,7 +149,7 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'hybrid'
 let g:airline_section_x = ''                      "who cares if utf8?
 let g:airline_section_y = '%{&filetype}'          "put ^ here
 let g:airline#extensions#whitespace#enabled = 0   "shut up I have gofmt
@@ -193,7 +193,7 @@ syntax on
 " see through your computer's soul
 hi Normal ctermbg=none
 hi LineNr ctermbg=none
-hi NonText ctermbg=none guibg=None
+hi NonText ctermbg=none
 
 "" ======= use clipboard ========
 set clipboard=unnamedplus           "this doesn't work anyway!
@@ -202,5 +202,5 @@ set clipboard=unnamedplus           "this doesn't work anyway!
 let g:syntastic_check_on_wq = 0     "nobody likes you c++, go away
 
 " =========== go stuffs ============
-set rtp+=$GOPATH/src/golang-refactoring.org/go-doctor/cmd/godoctor/vim
+set rtp+=$GOPATH/src/github.com/godoctor/godoctor/cmd/godoctor/vim
 let g:go_fmt_command = "goimports"

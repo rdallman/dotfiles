@@ -8,7 +8,7 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="imajes"
 #ZSH_THEME="lukerandall"
-ZSH_THEME="reedclean"
+ZSH_THEME="kolo"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -72,6 +72,3 @@ alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist
 export GOPATH=$HOME/Dev/gocode
 export GOROOT=/usr/local/src/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
