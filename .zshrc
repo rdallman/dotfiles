@@ -8,7 +8,7 @@ ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="imajes"
 #ZSH_THEME="lukerandall"
-ZSH_THEME="kolo"
+ZSH_THEME="garyblessington"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -69,6 +69,6 @@ alias bb='brew update && brew upgrade'
 #linux
 alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade'
 
-export GOPATH=$HOME/Dev/gocode
+export GOPATH=$HOME/dev/gocode
 export GOROOT=/usr/local/src/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH

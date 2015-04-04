@@ -187,13 +187,14 @@ endfunction
 
 "" ====== Theme ======
 hi clear SignColumn                 "gitgutter color
-"set list listchars=tab:»·,trail:·   "trailing whitespace, die 4 space tabs!
+set list lcs=trail:·,tab:»·
 colorscheme jellybeans
 syntax on
 " see through your computer's soul
 hi Normal ctermbg=none
 hi LineNr ctermbg=none
 hi NonText ctermbg=none
+hi SpecialKey ctermbg=none
 
 "" ======= use clipboard ========
 set clipboard=unnamedplus           "this doesn't work anyway!
