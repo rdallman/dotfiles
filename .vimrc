@@ -15,7 +15,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-" Plugins
+"" Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'cespare/vim-toml'
@@ -24,16 +24,16 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-unimpaired'
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'w0ng/vim-hybrid'
 Plug 'rking/ag.vim'
 Plug 'fatih/vim-go'
 Plug 'wting/rust.vim'
-Plug 'nanotech/jellybeans.vim'
+Plug 'ajh17/Spacegray.vim'
+Plug 'stephpy/vim-yaml'
 
 call plug#end()             " required
 filetype plugin indent on   " required
@@ -57,13 +57,13 @@ set visualbell                    "stop yelling at me
 set autoread                      "reload files changed outside vim
 set t_Co=256                      "why god?
 
-" remappings
+"" remappings
 let mapleader=","                   "remap leader to ,
 set pastetoggle=<F2>                "quit indenting yo shit
 noremap <silent> <leader>l :noh<CR> 
 noremap <silent> <leader>d :bd<CR>
 
-" splits                          "only you can prevent emacs pinky
+"" splits                          "only you can prevent emacs pinky
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -75,19 +75,19 @@ set splitright
 
 set mouse=a                       "allow scrolling
 
-" ====== Search Settings ======
+"" ====== Search Settings ======
 
 set incsearch                     "get next match while typing
 set hlsearch                      "highlighting
 set viminfo='100,f1               "save 100 marks, caps
 
-" ====== Pesky Swaps =====
+"" ====== Pesky Swaps =====
 
 set noswapfile                    "yes I made those changes
 set nobackup                      "no I don't need 7 trillion copies
 set nowb                          "stop yelling at me
 
-" ====== Indentation =====
+"" ====== Indentation =====
 
 set autoindent                    "why would you not want this? masochist!
 set smartindent
@@ -97,35 +97,35 @@ set softtabstop=2
 set tabstop=2                     "because 2 spaces is objectively the best
 set expandtab
 
-" wrap text, markdown files -- thanks thoughtbot
+"" wrap text, markdown files -- thanks thoughtbot
 augroup vimrcEx
   autocmd!
 
-  " For all text files set 'textwidth' to 78 characters.
+  "" For all text files set 'textwidth' to 78 characters.
   autocmd FileType text setlocal textwidth=78
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it for commit messages, when the position is invalid, or when
-  " inside an event handler (happens when dropping a file on gvim).
+  "" When editing a file, always jump to the last known cursor position.
+  "" Don't do it for commit messages, when the position is invalid, or when
+  "" inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
         \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
         \   exe "normal g`\"" |
         \ endif
 
-  " Set syntax highlighting for specific file types
+  "" Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
-  " Enable spellchecking for Markdown
+  "" Enable spellchecking for Markdown
   autocmd BufRead,BufNewFile *.md setlocal spell
 
-  " Automatically wrap at 80 characters for Markdown
+  "" Automatically wrap at 80 characters for Markdown
   autocmd BufRead,BufNewFile *.md setlocal textwidth=80
 augroup END
 
 set nowrap                          " let a line be a line
 set linebreak                       " stahp
 
-" ====== Folding ==========
+"" ====== Folding ==========
 set foldmethod=indent               " too lazy to tag
 au BufRead * normal zR
 
@@ -188,7 +188,7 @@ endfunction
 "" ====== Theme ======
 hi clear SignColumn                 "gitgutter color
 set list lcs=trail:·,tab:»·
-colorscheme jellybeans
+colorscheme spacegray
 syntax on
 " see through your computer's soul
 hi Normal ctermbg=none
@@ -203,5 +203,4 @@ set clipboard=unnamedplus           "this doesn't work anyway!
 let g:syntastic_check_on_wq = 0     "nobody likes you c++, go away
 
 " =========== go stuffs ============
-set rtp+=$GOPATH/src/github.com/godoctor/godoctor/cmd/godoctor/vim
-let g:go_fmt_command = "goimports"
+"let g:go_fmt_command = "goimports"

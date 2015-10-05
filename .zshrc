@@ -72,3 +72,4 @@ alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist
 export GOPATH=$HOME/dev/gocode
 export GOROOT=/usr/local/src/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export GO15VENDOREXPERIMENT=1
