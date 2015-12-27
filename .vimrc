@@ -2,12 +2,12 @@ set nocompatible                  " be iMproved
 filetype off                      " required!
 
 "" ======== plugin manager -- I guess this changes yearly now==========
+
 " install plugin manager of the week if fresh system
 let iCanHazPlugins=1
 let plug=expand('~/.vim/autoload/plug.vim')
 if !filereadable(plug)
-  echo "Right now you thanks previous you..."
-  echo ""
+  echon "Right now you thanks previous you..."
   silent !mkdir -p ~/.vim/autoload
   silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   let iCanHazPlugins=0
@@ -33,7 +33,9 @@ Plug 'rking/ag.vim'
 Plug 'fatih/vim-go'
 Plug 'wting/rust.vim'
 Plug 'ajh17/Spacegray.vim'
+Plug 'nanotech/jellybeans.vim'
 Plug 'stephpy/vim-yaml'
+Plug 'kchmck/vim-coffee-script'
 
 call plug#end()             " required
 filetype plugin indent on   " required
@@ -56,6 +58,16 @@ set showmode                      "show current mode
 set visualbell                    "stop yelling at me
 set autoread                      "reload files changed outside vim
 set t_Co=256                      "why god?
+set re=1                          "rubys were slow :(
+set ttyfast                       "speeds
+set lazyredraw                    "rabbits
+set noswapfile                    "yes I made those changes
+set nobackup                      "no I don't need 7 trillion copies
+set nowb                          "stop yelling at me
+
+if executable('/usr/bin/ruby')
+  let g:ruby_path="/usr/bin/ruby"   "ruby is bad and should feel bad
+endif
 
 "" remappings
 let mapleader=","                   "remap leader to ,
@@ -72,20 +84,13 @@ nnoremap <C-=> <C-W>=
 
 set splitbelow                    "naturally go right and down
 set splitright
-
-set mouse=a                       "allow scrolling
+set diffopt+=vertical             "always use vertical diffs
 
 "" ====== Search Settings ======
 
 set incsearch                     "get next match while typing
 set hlsearch                      "highlighting
 set viminfo='100,f1               "save 100 marks, caps
-
-"" ====== Pesky Swaps =====
-
-set noswapfile                    "yes I made those changes
-set nobackup                      "no I don't need 7 trillion copies
-set nowb                          "stop yelling at me
 
 "" ====== Indentation =====
 
@@ -101,9 +106,6 @@ set expandtab
 augroup vimrcEx
   autocmd!
 
-  "" For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
   "" When editing a file, always jump to the last known cursor position.
   "" Don't do it for commit messages, when the position is invalid, or when
   "" inside an event handler (happens when dropping a file on gvim).
@@ -115,11 +117,11 @@ augroup vimrcEx
   "" Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile *.md set filetype=markdown
 
-  "" Enable spellchecking for Markdown
-  autocmd BufRead,BufNewFile *.md setlocal spell
+  "" For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text,markdown,gitcommit setlocal textwidth=78
 
-  "" Automatically wrap at 80 characters for Markdown
-  autocmd BufRead,BufNewFile *.md setlocal textwidth=80
+  "" Enable spellchecking for Markdown
+  autocmd FileType text,markdown,gitcommit setlocal spell
 augroup END
 
 set nowrap                          " let a line be a line
@@ -170,34 +172,16 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-" ====== fasd ===========
-" :Z - cd to recent / frequent directories
-command! -nargs=* Z :call Z(<f-args>)
-function! Z(...)
-  let cmd = 'fasd -d -e printf'
-  for arg in a:000
-    let cmd = cmd . ' ' . arg
-  endfor
-  let path = system(cmd)
-  if isdirectory(path)
-    echo path
-    exec 'cd ' . path
-  endif
-endfunction
-
 "" ====== Theme ======
 hi clear SignColumn                 "gitgutter color
-set list lcs=trail:·,tab:»·
-colorscheme spacegray
+set list listchars=tab:»·,trail:·
+colorscheme jellybeans
 syntax on
 " see through your computer's soul
 hi Normal ctermbg=none
 hi LineNr ctermbg=none
 hi NonText ctermbg=none
 hi SpecialKey ctermbg=none
-
-"" ======= use clipboard ========
-set clipboard=unnamedplus           "this doesn't work anyway!
 
 " ======== synstastic =========
 let g:syntastic_check_on_wq = 0     "nobody likes you c++, go away
