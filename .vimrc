@@ -32,10 +32,10 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'rking/ag.vim'
 Plug 'fatih/vim-go'
 Plug 'wting/rust.vim'
-Plug 'ajh17/Spacegray.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'stephpy/vim-yaml'
 Plug 'kchmck/vim-coffee-script'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()             " required
 filetype plugin indent on   " required
@@ -151,7 +151,7 @@ if ! has('gui_running')               "fix the slowness of powerline
   augroup END
 endif
 
-let g:airline_theme = 'hybrid'
+let g:airline_theme = 'jellybeans'
 let g:airline_section_x = ''                      "who cares if utf8?
 let g:airline_section_y = '%{&filetype}'          "put ^ here
 let g:airline#extensions#whitespace#enabled = 0   "shut up I have gofmt
@@ -166,7 +166,7 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " use ag in CtrlP because ain't nobody got time fo dat
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --files-with-matches -g "" --ignore "vendor/" --ignore bundle/'
 
   "don't even have to leave to see new files!
   let g:ctrlp_use_caching = 0
