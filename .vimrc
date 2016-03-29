@@ -18,24 +18,35 @@ call plug#begin('~/.vim/plugged')
 "" Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'cespare/vim-toml'
-Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-unimpaired'
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'rking/ag.vim'
+"Plug 'rking/ag.vim'
+Plug 'mhinz/vim-grepper'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'godoctor/godoctor.vim'
+Plug 'benekastah/neomake'
+" langs
+Plug 'kchmck/vim-coffee-script'
 Plug 'fatih/vim-go'
 Plug 'wting/rust.vim'
-Plug 'nanotech/jellybeans.vim'
 Plug 'stephpy/vim-yaml'
-Plug 'kchmck/vim-coffee-script'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'cespare/vim-toml'
+Plug 'tpope/vim-markdown'
+" colors
+Plug 'nanotech/jellybeans.vim'
+Plug 'morhetz/gruvbox'
+Plug 'chriskempson/base16-vim'
+Plug 'ajh17/Spacegray.vim'
+Plug 'AlessandroYorba/Alduin'
+Plug 'sheerun/vim-wombat-scheme'
+Plug 'junegunn/seoul256.vim'
 
 call plug#end()             " required
 filetype plugin indent on   " required
@@ -102,7 +113,6 @@ set softtabstop=2
 set tabstop=2                     "because 2 spaces is objectively the best
 set expandtab
 
-"" wrap text, markdown files -- thanks thoughtbot
 augroup vimrcEx
   autocmd!
 
@@ -122,6 +132,9 @@ augroup vimrcEx
 
   "" Enable spellchecking for Markdown
   autocmd FileType text,markdown,gitcommit setlocal spell
+
+  "" neomake
+  autocmd! BufWritePost * Neomake!
 augroup END
 
 set nowrap                          " let a line be a line
@@ -173,18 +186,34 @@ if executable('ag')
 endif
 
 "" ====== Theme ======
-hi clear SignColumn                 "gitgutter color
 set list listchars=tab:»·,trail:·
+set background=dark
 colorscheme jellybeans
 syntax on
 " see through your computer's soul
-hi Normal ctermbg=none
-hi LineNr ctermbg=none
-hi NonText ctermbg=none
-hi SpecialKey ctermbg=none
-
-" ======== synstastic =========
-let g:syntastic_check_on_wq = 0     "nobody likes you c++, go away
+"gitgutter color
+hi clear SignColumn
+" bg
+hi Normal ctermbg=none guibg=none
+" line numbers
+hi CursorLineNr ctermbg=none guibg=none
+hi LineNr ctermbg=none guibg=none
+" whack bg
+hi NonText ctermbg=none guibg=none
+" listchars (tab,EOL)
+hi SpecialKey ctermbg=none guibg=none ctermfg=238 guifg=#444444
 
 " =========== go stuffs ============
-"let g:go_fmt_command = "goimports"
+let g:go_fmt_command = "goimports"
+let g:neomake_go_enabled_makers = ['go']
+let g:neomake_verbose=0
+
+" nvim speed for escape
+if ! has('gui_running')
+  set ttimeoutlen=10
+  augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=1000
+  augroup END
+endif
