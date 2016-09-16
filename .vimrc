@@ -1,7 +1,6 @@
 set nocompatible                  " be iMproved
-filetype off                      " required!
 
-"" ======== plugin manager -- I guess this changes yearly now==========
+" ======== plugin manager -- I guess this changes yearly now==========
 
 " install plugin manager of the week if fresh system
 let iCanHazPlugins=1
@@ -69,6 +68,7 @@ set showmode                      "show current mode
 set visualbell                    "stop yelling at me
 set autoread                      "reload files changed outside vim
 set t_Co=256                      "why god?
+"set term=xterm-256color           "colors
 set re=1                          "rubys were slow :(
 set ttyfast                       "speeds
 set lazyredraw                    "rabbits
@@ -80,9 +80,9 @@ if executable('/usr/bin/ruby')
   let g:ruby_path="/usr/bin/ruby"   "ruby is bad and should feel bad
 endif
 
-"" remappings
-let mapleader=","                   "remap leader to ,
-set pastetoggle=<F2>                "quit indenting yo shit
+" remappings
+let mapleader=","                  "remap leader to ,
+set pastetoggle=<F2>               "quit indenting yo shit
 noremap <silent> <leader>l :noh<CR> 
 noremap <silent> <leader>d :bd<CR>
 
@@ -120,9 +120,9 @@ augroup vimrcEx
   "" Don't do it for commit messages, when the position is invalid, or when
   "" inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
-        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
-        \ endif
+	\ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+	\   exe "normal g`\"" |
+	\ endif
 
   "" Set syntax highlighting for specific file types
   autocmd BufRead,BufNewFile *.md set filetype=markdown
@@ -194,17 +194,16 @@ syntax on
 "gitgutter color
 hi clear SignColumn
 " bg
-hi Normal ctermbg=none guibg=none
+hi Normal ctermbg=NONE guibg=NONE
 " line numbers
-hi CursorLineNr ctermbg=none guibg=none
-hi LineNr ctermbg=none guibg=none
+hi CursorLineNr ctermbg=NONE guibg=NONE
+hi LineNr ctermbg=NONE guibg=NONE
 " whack bg
-hi NonText ctermbg=none guibg=none
+hi NonText ctermbg=NONE guibg=NONE
 " listchars (tab,EOL)
-hi SpecialKey ctermbg=none guibg=none ctermfg=238 guifg=#444444
+hi SpecialKey ctermbg=NONE guibg=NONE ctermfg=238 guifg=#444444
 
 " =========== go stuffs ============
-let g:go_fmt_command = "goimports"
 let g:neomake_go_enabled_makers = ['go']
 let g:neomake_verbose=0
 

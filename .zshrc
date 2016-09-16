@@ -53,7 +53,6 @@ source $ZSH/oh-my-zsh.sh
 
 #aliases
 #everybody
-alias vi=vim
 alias gi='go install'
 alias gir='go install && `basename $PWD`'
 alias gob='go build'
@@ -67,9 +66,18 @@ alias tmux='tmux -2'
 alias bb='brew update && brew upgrade'
 
 #linux
-alias uu='sudo apt-get update && sudo apt-get -y upgrade && sudo apt-get -y dist-upgrade'
+alias uu='sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade && sudo apt -y autoremove'
 
 export GOPATH=$HOME/dev/gocode
 export GOROOT=/usr/local/src/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 export GO15VENDOREXPERIMENT=1
+
+export CC=clang
+export CXX=clang++
+
+alias conflicts='vi $(ag -l "<<<<<<<")'
+alias vim=nvim
+alias vi=nvim
+export TERM=xterm-256color
+#export NVIM_TUI_ENABLE_TRUE_COLOR=1
