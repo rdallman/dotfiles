@@ -66,6 +66,7 @@ set history=1000                  "know your history
 set showcmd                       "show incomplete commands
 set showmode                      "show current mode
 set visualbell                    "stop yelling at me
+set t_vb=                         "really, stop yelling
 set autoread                      "reload files changed outside vim
 set t_Co=256                      "why god?
 "set term=xterm-256color           "colors
