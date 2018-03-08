@@ -21,31 +21,20 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-unimpaired'
 Plug 'bling/vim-airline'
 Plug 'bling/vim-bufferline'
-Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
-"Plug 'rking/ag.vim'
-Plug 'mhinz/vim-grepper'
+Plug 'rking/ag.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godoctor/godoctor.vim'
-Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " langs
-Plug 'kchmck/vim-coffee-script'
+Plug 'sheerun/vim-polyglot'
 Plug 'fatih/vim-go'
-Plug 'wting/rust.vim'
-Plug 'stephpy/vim-yaml'
-Plug 'cespare/vim-toml'
-Plug 'tpope/vim-markdown'
 " colors
 Plug 'nanotech/jellybeans.vim'
-Plug 'morhetz/gruvbox'
-Plug 'chriskempson/base16-vim'
-Plug 'ajh17/Spacegray.vim'
-Plug 'AlessandroYorba/Alduin'
-Plug 'sheerun/vim-wombat-scheme'
-Plug 'junegunn/seoul256.vim'
 
 call plug#end()             " required
 filetype plugin indent on   " required
@@ -94,6 +83,9 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-=> <C-W>=
 
+" ale
+let g:ale_lint_on_text_changed = 'never'
+
 set splitbelow                    "naturally go right and down
 set splitright
 set diffopt+=vertical             "always use vertical diffs
@@ -134,8 +126,8 @@ augroup vimrcEx
   "" Enable spellchecking for Markdown
   autocmd FileType text,markdown,gitcommit setlocal spell
 
-  "" neomake
-  autocmd! BufWritePost * Neomake!
+  " strip whitespace in go files
+  autocmd BufWritePre *.go :%s/\s\+$//e
 augroup END
 
 set nowrap                          " let a line be a line
@@ -178,12 +170,6 @@ let g:bufferline_echo = 0            "louuuuud noises
 if executable('ag')
   " use silver searcher for grep
   set grepprg=ag\ --nogroup\ --nocolor
-
-  " use ag in CtrlP because ain't nobody got time fo dat
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --files-with-matches -g "" --ignore "vendor/" --ignore bundle/'
-
-  "don't even have to leave to see new files!
-  let g:ctrlp_use_caching = 0
 endif
 
 "" ====== Theme ======
@@ -204,16 +190,13 @@ hi NonText ctermbg=NONE guibg=NONE
 " listchars (tab,EOL)
 hi SpecialKey ctermbg=NONE guibg=NONE ctermfg=238 guifg=#444444
 
-" =========== go stuffs ============
-let g:neomake_go_enabled_makers = ['go']
-let g:neomake_verbose=0
+" ======= fzf ==============
 
-" nvim speed for escape
-if ! has('gui_running')
-  set ttimeoutlen=10
-  augroup FastEscape
-    autocmd!
-    au InsertEnter * set timeoutlen=0
-    au InsertLeave * set timeoutlen=1000
-  augroup END
-endif
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+command! ProjectFiles execute 'Files' s:find_git_root()
+
+nmap <C-P> :ProjectFiles<CR>
+
