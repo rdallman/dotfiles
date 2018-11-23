@@ -77,7 +77,4 @@ export CC=clang
 export CXX=clang++
 
 alias conflicts='vi $(ag -l "<<<<<<<")'
-alias vim=nvim
-alias vi=nvim
 export TERM=xterm-256color
-#export NVIM_TUI_ENABLE_TRUE_COLOR=1
