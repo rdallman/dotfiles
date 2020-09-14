@@ -1,20 +1,17 @@
 set nocompatible                  " be iMproved
 
-" ======== plugin manager -- I guess this changes yearly now==========
+" ======== plugin manager -- I guess this changes yearly now ==========
 
 " install plugin manager of the week if fresh system
-let iCanHazPlugins=1
-let plug=expand('~/.vim/autoload/plug.vim')
-if !filereadable(plug)
-  echon "Right now you thanks previous you..."
-  silent !mkdir -p ~/.vim/autoload
-  silent !curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  let iCanHazPlugins=0
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $HOME/.vimrc
 endif
 
 call plug#begin('~/.vim/plugged')
 
-"" Plugins
+" Plugins
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
@@ -24,27 +21,24 @@ Plug 'bling/vim-bufferline'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'rking/ag.vim'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'godoctor/godoctor.vim'
 Plug 'w0rp/ale'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'peitalin/vim-jsx-typescript'
+
 " langs
 Plug 'sheerun/vim-polyglot'
 Plug 'fatih/vim-go'
+
 " colors
 Plug 'nanotech/jellybeans.vim'
+"Plug 'gruvbox-community/gruvbox'
 
 call plug#end()             " required
 filetype plugin indent on   " required
-
-"install above bundles if fresh system
-if iCanHazPlugins == 0
-  echo "Installing yo shit, please ignore key map error messages"
-  echo ""
-  :PlugInstall
-endif
 
 set encoding=utf-8                "b/c Pike won
 
@@ -54,12 +48,12 @@ set backspace=indent,eol,start    "it's 2014 we can use backspace meow
 set history=1000                  "know your history
 set showcmd                       "show incomplete commands
 set showmode                      "show current mode
-set visualbell                    "stop yelling at me
+"set visualbell                    "stop yelling at me
 set t_vb=                         "really, stop yelling
 set autoread                      "reload files changed outside vim
 set t_Co=256                      "why god?
-"set term=xterm-256color           "colors
-set re=1                          "rubys were slow :(
+set term=xterm-256color           "colors
+"set re=1                          "rubys were slow :( THIS WAS CAUSING ISSUES!!!
 set ttyfast                       "speeds
 set lazyredraw                    "rabbits
 set noswapfile                    "yes I made those changes
@@ -109,25 +103,26 @@ set expandtab
 augroup vimrcEx
   autocmd!
 
-  "" When editing a file, always jump to the last known cursor position.
-  "" Don't do it for commit messages, when the position is invalid, or when
-  "" inside an event handler (happens when dropping a file on gvim).
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
   autocmd BufReadPost *
-	\ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-	\   exe "normal g`\"" |
-	\ endif
+  \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal g`\"" |
+  \ endif
 
   "" Set syntax highlighting for specific file types
-  autocmd BufRead,BufNewFile *.md set filetype=markdown
+  "autocmd BufRead,BufNewFile *.md set filetype=markdown
+  "autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+
+  " testing to see if this is actually fast... so far no
+  "autocmd BufEnter * :syntax sync fromstart
 
   "" For all text files set 'textwidth' to 78 characters.
   autocmd FileType text,markdown,gitcommit setlocal textwidth=78
 
   "" Enable spellchecking for Markdown
   autocmd FileType text,markdown,gitcommit setlocal spell
-
-  " strip whitespace in go files
-  autocmd BufWritePre *.go :%s/\s\+$//e
 augroup END
 
 set nowrap                          " let a line be a line
@@ -138,7 +133,7 @@ set foldmethod=indent               " too lazy to tag
 au BufRead * normal zR
 
 " ====== completion ======
-set wildmode=list:longest  
+set wildmode=list:longest
 
 " ====== scrolling ========
 set scrolloff=8                       "keep a reasonable padding at edges
@@ -148,14 +143,14 @@ set sidescroll=1
 " ====== airline ==========
 set laststatus=2                      "always display statusline in all windows
 set noshowmode                        "hide default mode text
-if ! has('gui_running')               "fix the slowness of powerline
-  set ttimeoutlen=10
-  augroup FastEscape
-    autocmd!
-    au InsertEnter * set timeoutlen=0
-    au InsertLeave * set timeoutlen=1000
-  augroup END
-endif
+"if ! has('gui_running')               "fix the slowness of powerline
+"  set ttimeoutlen=10
+"  augroup FastEscape
+"    autocmd!
+"    au InsertEnter * set timeoutlen=0
+"    au InsertLeave * set timeoutlen=1000
+"  augroup END
+"endif
 
 let g:airline_theme = 'jellybeans'
 let g:airline_section_x = ''                      "who cares if utf8?
@@ -166,17 +161,13 @@ let g:airline#extensions#hunks#enabled = 0        "wat
 " ====== bufferline ===
 let g:bufferline_echo = 0            "louuuuud noises
 
-" ====== ag / ctrlp mods ========
-if executable('ag')
-  " use silver searcher for grep
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
-
 "" ====== Theme ======
 set list listchars=tab:»·,trail:·
 set background=dark
 colorscheme jellybeans
 syntax on
+set redrawtime=10000 " idk what happened
+
 " see through your computer's soul
 "gitgutter color
 hi clear SignColumn

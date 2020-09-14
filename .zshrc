@@ -43,22 +43,14 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git github fasd go heroku systemadmin)
+plugins=(git github fasd golang fzf ripgrep tmux nvm)
 
 source $ZSH/oh-my-zsh.sh
 
-# VI mode
-#bindkey -v
-#bindkey -M vicmd '/' history-incremental-search-backward
-
 #aliases
-#everybody
-alias gi='go install'
-alias gir='go install && `basename $PWD`'
-alias gob='go build'
-alias gobr='go build && `basename $PWD`'
 
 alias squash='git fetch origin && git rebase -i HEAD~`git cherry -v origin/master | wc -l | tr -d " "`'
+alias conflicts='vi $(rg -l "<<<<<<<")'
 
 alias tmux='tmux -2'
 
@@ -68,13 +60,15 @@ alias bb='brew update && brew upgrade'
 #linux
 alias uu='sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade && sudo apt -y autoremove'
 
+
 export GOPATH=$HOME/dev/gocode
 export GOROOT=/usr/local/src/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-export GO15VENDOREXPERIMENT=1
 
 export CC=clang
 export CXX=clang++
 
-alias conflicts='vi $(ag -l "<<<<<<<")'
 export TERM=xterm-256color
+
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+
