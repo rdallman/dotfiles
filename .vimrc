@@ -82,7 +82,7 @@ let g:ale_lint_on_text_changed = 'never'
 
 set splitbelow                    "naturally go right and down
 set splitright
-set diffopt+=vertical             "always use vertical diffs
+set diffopt=vertical             "always use vertical diffs
 
 "" ====== Search Settings ======
 
