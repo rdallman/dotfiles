@@ -43,7 +43,7 @@ DISABLE_CORRECTION="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git github fasd golang fzf ripgrep tmux nvm)
+plugins=(git github fasd golang fzf tmux ssh python pyenv docker kubectl macos nvm)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -62,13 +62,13 @@ alias uu='sudo apt update && sudo apt -y upgrade && sudo apt -y dist-upgrade && 
 
 
 export GOPATH=$HOME/dev/gocode
-export GOROOT=/usr/local/src/go
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
 
-export CC=clang
-export CXX=clang++
+export CC=gcc
+export CXX=gcc
 
 export TERM=xterm-256color
 
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true

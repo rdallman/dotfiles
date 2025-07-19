@@ -191,3 +191,7 @@ command! ProjectFiles execute 'Files' s:find_git_root()
 
 nmap <C-P> :ProjectFiles<CR>
 
+" TODO remove
+"let g:go_fmt_autosave = 0
+
+
